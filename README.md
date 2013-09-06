@@ -1,4 +1,4 @@
-Tinker
+Tinker Taylor
 ======
 
 Random work which is building up towards a fully fledged project.
