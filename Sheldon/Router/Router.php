@@ -5,7 +5,7 @@
  *
  *@file Router class files. 
  * 
- *@comment Includes the module files.
+ *@comment Routes to include a specific module, determined by the GET request.
  */
 
 namespace Sheldon\Router;
@@ -18,14 +18,12 @@ use Module as Module;
 class Router 
 {
 
-
-protected $c = null;// controlling script for the module
-protected $url = null;//url
-protected $moduleRootDir = null; //Root Module directory.
-protected $moduleLoadFile = null;
-protected $customoduleDir = null;
-protected $customController = null;
-protected $fileExtension = '.php';
+protected $url = null;//Global url parameters passed.
+protected $moduleRootDir = null; //Root Module directory.Set in Root index.php when initialised.
+protected $moduleLoadFile = null;//Default global Load.php file expected.Set in Root index.php when initialised.
+protected $customoduleDir = null;//The specific module which is passed in $url.
+protected $customController = null;// controlling script for the module.
+protected $fileExtension = '.php';//Default file extention of Load file.
 
     /**
      *Constructor
@@ -41,8 +39,12 @@ protected $fileExtension = '.php';
          $this->moduleLoadFile = $moduleLoadFile.$this->fileExtension;
     }
 
-    /*
+    /**
      * PUBLIC _get
+     *The (object)URL is checked for specific parameters 
+     *to load a module which resideds in the Module directory
+     *
+     *@param $get URL parameter
      *
      */
     public function _get ( $get)
@@ -75,6 +77,10 @@ protected $fileExtension = '.php';
         
     }
 
+    /**
+     *_setModuleController
+     *
+     */
     private function _setModuleController ($module)
     {
           $this->_setCustomModuleDir ($this->url->m = $module);
@@ -104,8 +110,9 @@ protected $fileExtension = '.php';
      */
      private function _controlContent ($controller,$params)
     {
-            $view = new Controller\Controller($controller,$params);
+            $control = new Controller\Controller($controller,$params);
     }
+
     /*
      *_setCustomController
      *
@@ -174,7 +181,9 @@ protected $fileExtension = '.php';
     }
 
     /*
+     *_urlBasename
      *
+     *A helper method which strips the url down to its basename.
      *
      */
     protected function _urlBasename ($url)
@@ -188,7 +197,9 @@ protected $fileExtension = '.php';
     }
 
     /*
+     *_convertBaseUrlArrayToObject
      *
+     *Use ARRAY as OBJECT
      *
      */
     protected function _convertBaseUrlArrayToObject ($url)

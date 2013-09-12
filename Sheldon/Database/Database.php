@@ -1,7 +1,7 @@
 <?php
 namespace Sheldon\Database;
 /**
- *@file
+ *@file Connects to a specific datastore
  *
  */
 class Database 

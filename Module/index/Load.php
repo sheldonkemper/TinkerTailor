@@ -6,6 +6,8 @@ use Module\index\view as View;
 /**
  *@file
  *
+ *To accept parameters which are queryable and then inject into a fragment template
+ *@return fragment.inc
  */
 class Load
 {
@@ -14,7 +16,6 @@ class Load
      *
      */
     protected $params;
-
     protected $model;
     protected $view;
 
@@ -22,10 +23,8 @@ class Load
     {
         $this->params = $param;
 
-        $this->model = new Model\Model($this->params);
-        $m = new Model\Model($this->params);
-        $v = new View\View();
-
+        $this->model = new Model\Model('select',$this->params);
+        $v = new View\View('Must add array from model');
     }
     /**
      *
@@ -33,10 +32,10 @@ class Load
      */
     public function _send()
     {
-        echo "\n".'<br>'.'Hello from loading.... Index load module - url params are :'.print_r($this->params)."\t\n".'<br>';
+    
 
-        $modelData = $this->model->_get();
-        $this->view = new View\View($modelData);
-
+        $modelData = $this->model->_select();//TODO delete.
+        $this->view = new View\View('<br>'.'Hello from loading.... Index load module - url params are :'.print_r($this->params).$modelData);
+        $this->view->_send();
     }
 }

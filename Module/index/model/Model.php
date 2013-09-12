@@ -3,7 +3,8 @@ namespace Module\index\model;
 use Sheldon\Model as Models;
 
 /**
- *@file
+ *@file To detemine which action is needed and execute the specific query
+ *
  *
  */
 class Model extends Models\Model
@@ -15,14 +16,15 @@ class Model extends Models\Model
     protected $params;
 
 
-    public function __construct ($param) 
+    public function __construct ($action,$param) 
     {
         Models\Model::__construct();
         $this->params = $param;
-        echo "\n".'<br>'.'Hello from loading....Index Model module - url params are :'.print_r($this->params)."\n".'<br>';
+        Models\Model::_action($action);
+        //echo "\n".'<br>'.'Hello from loading....Index Model module - url params are :'.print_r($this->params)."\n".'<br>';
     }
 
-    public function _get()
+    public function _select()
     {
         $id=1;
         $query = "SELECT * FROM user WHERE id=:id ";
@@ -30,12 +32,7 @@ class Model extends Models\Model
         $row = Models\Model::_select ($query,$array);
         print_r($row);
     }
+
     
-    public function __construct ($param)
-    {
-        $this->params = $param;
-        
-        //parent::__construct();
-       echo "\n".'<br>'.'Hello from loading....Index Model module - url params are :'.print_r($this->params)."\n".'<br>';
-    }
+    
 }

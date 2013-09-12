@@ -10,18 +10,19 @@ use Sheldon\Database as Database;
 class Model extends Database\Database
 {
 
-    
-    /**
-     *
-     *
-     */
-    /*
-    //public $dbh;
-    public function __construct()
+  protected function _action($string)
     {
-       $this->dbh = Database\Database::__construct();
+        $method = '_'.$string;
+        if(method_exists(__CLASS__,$method))
+        {
+            return true;
+        }
+        else
+        {
+            throw new \Exception("Method does not exists", 1);
+            
+        }
     }
-    */
 
     /**
      *

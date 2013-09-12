@@ -7,13 +7,27 @@ use Sheldon\View as InterfaceView;
  */
 class View implements InterfaceView\View
 {
+    public $values;
 
-    public function __construct ()
+    public function __construct ($array)
     {
+        $this->values=$array;
     }
 
     public function _send()
     {
+
+         $this->_include();
+    }
+
+    public function _include()
+    {
+        $value = $this->values;
+        include 'fragment.inc';
+    }
+    public function _processDataForDisplay ()
+    {
+        
     }
 
 }

@@ -6,7 +6,8 @@
  *
  *@file Welcome to the  doorstep. 
  * 
- *@comment  Needs work.
+ *@comment  Initialises the Router class by passing a GET request and catches any errors from the underlining scripts.
+ *Global parameters can be set here such as error dosplay.
  */
 
 //use \Sheldon\Text as Text;
