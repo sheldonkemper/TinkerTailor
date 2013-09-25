@@ -1,5 +1,5 @@
 <?php
-namespace Sheldon\Helper;
+namespace Engine\Helper;
 class DirExists
 {
     public function __construct ($moduleDir) 

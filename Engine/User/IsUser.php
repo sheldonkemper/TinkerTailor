@@ -1,7 +1,7 @@
 <?php
 /**
- *@author sheldonkemper
- *@copyright 2013-2014 Sheldon Kemper
+ *@author Enginekemper
+ *@copyright 2013-2014 Engine Kemper
  *@license http://opensource.org/licenses/GPL-3.0
  *
  *Is a User Name
@@ -11,7 +11,7 @@
  *@todo Test and make more robust to database array
  */
 
-namespace Sheldon\User;
+namespace Engine\User;
 
 class IsUser
 {

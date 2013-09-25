@@ -4,7 +4,7 @@
   *@site http://www.rogerethomas.com/blog/php-convert-array-to-object
   *
   */
-namespace Sheldon\Helper;
+namespace Engine\Helper;
 
 class ArrayToObject {
 

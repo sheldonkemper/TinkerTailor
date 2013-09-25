@@ -1,8 +1,8 @@
 <?php
 
 /**
- *@author Sheldon Kemper
- *@copyright Sheldon Kemper 2013
+ *@author Engine Kemper
+ *@copyright Engine Kemper 2013
  *
  *@file Welcome to the  doorstep. 
  * 
@@ -10,12 +10,12 @@
  *Global parameters can be set here such as error dosplay.
  */
 
-//use \Sheldon\Text as Text;
-//use \Sheldon\File as File;
-//use \Sheldon\Helper as Helper;
-use \Sheldon\Router as Router;
+//use \Engine\Text as Text;
+//use \Engine\File as File;
+use \Engine\Helper as Helper;
+use \Engine\Router as Router;
 
-include('Sheldon\autoload.php');
+include('Engine\autoload.php');
 
 //Module directory
 define("MODULEROOT", "Module");
@@ -24,7 +24,7 @@ define("LOADFILE", "Load");
 
 //To test how this currently works. Put into url ?m=test&c=test
 try{
-
+    
 $router = new Router\Router(MODULEROOT,LOADFILE);
 $router->_get($_GET);
 

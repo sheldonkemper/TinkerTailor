@@ -4,12 +4,12 @@
   *@site http://stackoverflow.com/questions/928928/determining-what-classes-are-defined-in-a-php-class-file
   *
   */
-namespace Sheldon\Helper;
+namespace Engine\Helper;
 
-class GetClasses
+class ClassHelper
 {
 
-public function __construct($php_code) {
+public function getClasses($php_code) {
   $classes = array();
   $tokens = token_get_all($php_code);
   $count = count($tokens);
@@ -24,4 +24,23 @@ public function __construct($php_code) {
   }
   return $classes;
 }
-}
+
+/**
+ *
+ *@return Bool TRUE
+ */
+  public function isMethodInClass($class,$string) 
+  {
+          $method = '_'.$string;
+          if(method_exists($class,$method))
+          {
+              return TRUE;
+          }
+          else
+          {
+              throw new \Exception("Method does not exists", 1);
+              
+          }
+  }
+
+}//End Class

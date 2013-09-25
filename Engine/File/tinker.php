@@ -2,8 +2,8 @@
 /**
  *@file A collection of random classes.
  *
- *@author sheldonkemper
- *@copyright 2013-2014 Sheldon Kemper
+ *@author Enginekemper
+ *@copyright 2013-2014 Engine Kemper
  *@license http://opensource.org/licenses/GPL-3.0
  */
  

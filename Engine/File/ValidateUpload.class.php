@@ -1,7 +1,7 @@
 <?php
 /**
- *@author sheldonkemper
- *@copyright 2013-2014 Sheldon Kemper
+ *@author Enginekemper
+ *@copyright 2013-2014 Engine Kemper
  *@license http://opensource.org/licenses/GPL-3.0
  *
  *@file Verify multiple file upload stored in temp dir
@@ -16,7 +16,7 @@
  *
  *@todo Class in progress......
  */
-namespace Sheldon\File;
+namespace Engine\File;
 
 class ValidateUpload
 {

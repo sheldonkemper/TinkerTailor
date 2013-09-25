@@ -1,7 +1,7 @@
 <?php
 namespace Module\index;
 use Module\index\model as Model;
-use Module\index\view as View;
+use Module\index\view as moduleView;
 
 /**
  *@file
@@ -9,6 +9,7 @@ use Module\index\view as View;
  *To accept parameters which are queryable and then inject into a fragment template
  *@return fragment.inc
  */
+
 class Load
 {
     /**
@@ -22,9 +23,6 @@ class Load
     public function __construct($param)
     {
         $this->params = $param;
-
-        $this->model = new Model\Model('select',$this->params);
-        $v = new View\View('Must add array from model');
     }
     /**
      *
@@ -32,10 +30,8 @@ class Load
      */
     public function _send()
     {
-    
+        $this->view = new moduleView\View($this->params);//TODO Add data from model to be transformed
+        //$this->view->_send();
 
-        $modelData = $this->model->_select();//TODO delete.
-        $this->view = new View\View('<br>'.'Hello from loading.... Index load module - url params are :'.print_r($this->params).$modelData);
-        $this->view->_send();
     }
 }

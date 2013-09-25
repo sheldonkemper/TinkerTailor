@@ -1,12 +1,12 @@
 <?php
 /**
- *@Author Sheldon Kemper
- *@Copyright Sheldon Kemper 2013
+ *@Author Engine Kemper
+ *@Copyright Engine Kemper 2013
  *
  *@File A less simple approch to the typical Hello World 
  *     
  */
-namespace Sheldon\Text;
+namespace Engine\Text;
 
 class Plain {
 

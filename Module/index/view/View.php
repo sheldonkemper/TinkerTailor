@@ -1,30 +1,39 @@
 <?php
 namespace Module\index\view;
-use Sheldon\View as InterfaceView;
+use Engine\View as MainView;
 /**
  *@file
  *
  */
-class View implements InterfaceView\View
+class View extends MainView\View
 {
-    public $values;
-
-    public function __construct ($array)
+    public $values="hello";
+    
+    public function __construct ($data)
     {
-        $this->values=$array;
+        MainView\View::__construct();
+    }
+     public function _setBody ()
+    {
+
+         $this->body = $this->_include();
     }
 
-    public function _send()
-    {
-
-         $this->_include();
-    }
 
     public function _include()
     {
-        $value = $this->values;
-        include 'fragment.inc';
+        $filename=__DIR__."/fragment.inc";
+
+
+        if (is_file($filename)) 
+        {
+            ob_start();
+            include $filename;
+            return ob_get_clean();
+        }
+
     }
+
     public function _processDataForDisplay ()
     {
         

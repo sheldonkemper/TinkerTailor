@@ -1,17 +1,17 @@
 <?php
 /**
- *@author Sheldon Kemper
- *@copyright Sheldon Kemper 2013
+ *@author Engine Kemper
+ *@copyright Engine Kemper 2013
  *
  *@file Router class files. 
  * 
  *@comment Routes to include a specific module, determined by the GET request.
  */
 
-namespace Sheldon\Router;
+namespace Engine\Router;
 
-use Sheldon\Helper as Helper;
-use Sheldon\Controller as Controller;
+use Engine\Helper as Helper;
+use Engine\Controller as Controller;
 use Module as Module;
 
 
@@ -22,8 +22,9 @@ protected $url = null;//Global url parameters passed.
 protected $moduleRootDir = null; //Root Module directory.Set in Root index.php when initialised.
 protected $moduleLoadFile = null;//Default global Load.php file expected.Set in Root index.php when initialised.
 protected $customoduleDir = null;//The specific module which is passed in $url.
-protected $customController = null;// controlling script for the module.
+protected $customControllerFile = null;// controlling script for the module.
 protected $fileExtension = '.php';//Default file extention of Load file.
+public $defaultModuleFile = 'index';//If URL does not exist, then send to index.
 
     /**
      *Constructor
@@ -66,7 +67,7 @@ protected $fileExtension = '.php';//Default file extention of Load file.
                 //Or possible a default internal page.
                 //Or possible a 404.
                // throw new \Exception ("Needs Work!!Routed Url does not exists", 1);
-               $this->_setModuleController ('index');
+               $this->_setModuleController ($this->defaultModuleFile);
 
             }
         }
@@ -85,14 +86,14 @@ protected $fileExtension = '.php';//Default file extention of Load file.
     {
           $this->_setCustomModuleDir ($this->url->m = $module);
                 //Custom module load file
-                //@see comments in _setCustomController().
-                if ($this->_setCustomController())
+                //@see comments in _setcustomControllerFile().
+                if ($this->_setcustomControllerFile())
                 {
                    //Clone (object)URL
                    $clonedUrl = clone $this->url;
                    //Then unset the module and pass remained of url to Controller.
                    unset($clonedUrl->m);
-                   $this->_controlContent ($this->customController,$clonedUrl);
+                   $this->_controlContent ($this->customControllerFile,$clonedUrl);
                 }
                 else
                 {
@@ -114,12 +115,12 @@ protected $fileExtension = '.php';//Default file extention of Load file.
     }
 
     /*
-     *_setCustomController
+     *_setcustomControllerFile
      *
      *$this->customoduleDir is set in _setCustomModuleDir ($cModule)
      *$this->moduleLoadFile which  is currently a CONSTANT set in index.php
      */
-    protected function _setCustomController ()
+    protected function _setcustomControllerFile ()
     {
             if (isset($this->customoduleDir)&&isset($this->moduleLoadFile))
             {
@@ -127,8 +128,8 @@ protected $fileExtension = '.php';//Default file extention of Load file.
                 //Custom module load file
                 if (file_exists($loadFile)){
                     //Itialize Load.php
-                   $this->customController = $loadFile;
-                   return $this->customController;
+                   $this->customControllerFile = $loadFile;
+                   return $this->customControllerFile;
                }
                else
                {
