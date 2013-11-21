@@ -6,28 +6,46 @@ namespace Engine\Database;
  */
 class Database 
 {
-    public $dbh=null;
-    public static $dbtest;
+    private $dbh = null;
+    private static $_instance;
+    const DNS = 'mysql:dbname=testdb;host=127.0.0.1';
+    const USER = 'example';
+    const PASSWORD = 'password';
+
+    public static function getInstance()
+    {
+        if(!self::$_instance)
+        {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
 
     public function __construct ()
     {
-        //PDO Connection details..
-        //Needs work..
-        //TODO extract database connection details.And..
-        $dsn = 'mysql:dbname=testdb;host=127.0.0.1';
-        $user = 'example';
-        $password = 'password';
+        
         try
         {
-            self::$dbtest=new \PDO($dsn, $user, $password);
-            self::$dbtest->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            return self::$dbtest;
+            $this->dbh  = new \PDO(self::DNS, self::USER, self::PASSWORD, array(\PDO::ATTR_PERSISTENT => true));
+            $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            /*  Note: If you're using the PDO ODBC driver and your ODBC libraries support 
+                ODBC Connection Pooling (unixODBC and Windows are two that do; there may be more),
+                then it's recommended that you don't use persistent PDO connections, 
+                and instead leave the connection caching to the ODBC Connection Pooling layer. 
+            */
+     
         }
         catch(Exception $e)
         {
-            echo $e->getMessage();
+            return $e->getMessage();
         }
         
 
+    }
+
+    private function __clone(){}
+
+    public function getConnection() {
+        return $this->dbh;
     }
 }

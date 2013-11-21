@@ -3,8 +3,8 @@ namespace Module\index\model;
 use Engine\Model as Models;
 
 /**
- *@file To detemine which action is needed and execute the specific query
- *
+ *Detemine which action is needed and execute the specific query
+ *@return JSON
  *
  */
 class Model extends Models\Model
@@ -17,28 +17,32 @@ class Model extends Models\Model
     public $json;
 
 
-    public function __construct ($action,$param) 
-    {
-        Models\Model::__construct();
-        $this->params = $param;
-        if (Models\Model::_action($action))
-        {
+     private function isQueryable($param){
 
+        $this->params = $param;
+        if (Models\Model::_action($this->params->qt))//qt should be the query type.
+        {
+            //determine the action to execute on the data
+            return true;
         }
         else
         {
-            throw new \Exception("Query cannot be made", 1);
+            //throw new \Exception("Query cannot be made", 1);
+            return false;
         }
+     }
 
-    }
-
-    public function _select()
+    public function _query($params)
     {
+        if($this->isQueryable($params)){
+
         $id=1;
         $query = "SELECT * FROM user WHERE id=:id ";
         $array=array('id' => $id);
-        $row = Models\Model::_select ($query,$array);
-        return $this->json = $row;
+        $row = $this->_select ($query,$array);
+        $this->json = $row;
+        print_r($this->json);//Must return JSON encoded data.
+        }
     }
 
     

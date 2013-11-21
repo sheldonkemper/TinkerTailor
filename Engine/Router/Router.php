@@ -3,9 +3,8 @@
  *@author Engine Kemper
  *@copyright Engine Kemper 2013
  *
- *@file Router class files. 
- * 
- *@comment Routes to include a specific module, determined by the GET request.
+ * CLASS Router 
+ * Routes to include a specific module, determined by the GET request.
  */
 
 namespace Engine\Router;
@@ -27,7 +26,7 @@ protected $fileExtension = '.php';//Default file extention of Load file.
 public $defaultModuleFile = 'index';//If URL does not exist, then send to index.
 
     /**
-     *Constructor
+     *PUBLIC Constructor
      *
      *@param string:$moduleDir Name of directory were all modules reside
      *@param string:$moduleLoadFile The expected cofiguration file name for each module
@@ -51,7 +50,8 @@ public $defaultModuleFile = 'index';//If URL does not exist, then send to index.
     public function _get ( $get)
     { 
         //strip GET to basename and converts to object.
-        $this->url =  $this->_convertBaseUrlArrayToObject ($get);
+        $urlValueRemove = new Helper\Url();
+        $this->url = $urlValueRemove->convertBaseUrlArrayToObject($get);
 
         if (isset($this->url))
         {
@@ -78,51 +78,15 @@ public $defaultModuleFile = 'index';//If URL does not exist, then send to index.
         
     }
 
-    /**
-     *_setModuleController
-     *
-     */
-    private function _setModuleController ($module)
-    {
-          $this->_setCustomModuleDir ($this->url->m = $module);
-                //Custom module load file
-                //@see comments in _setcustomControllerFile().
-                if ($this->_setcustomControllerFile())
-                {
-                   //Clone (object)URL
-                   $clonedUrl = clone $this->url;
-                   //Then unset the module and pass remained of url to Controller.
-                   unset($clonedUrl->m);
-                   $this->_controlContent ($this->customControllerFile,$clonedUrl);
-                }
-                else
-                {
-                    throw new \Exception("This module file still does not exists", 1);
-                }
-    }
-
-    /**
-     *Private _viewContent
-     *
-     *@comment Initialize the Controller Class.
-     *@param $controller:String The path to the module load file.
-     *@param  $params:Object Parameters from the url.
-     *@return new Controller().
-     */
-     private function _controlContent ($controller,$params)
-    {
-            $control = new Controller\Controller($controller,$params);
-    }
-
     /*
-     *_setcustomControllerFile
+     *PROTECTED _setcustomControllerFile
      *
      *$this->customoduleDir is set in _setCustomModuleDir ($cModule)
      *$this->moduleLoadFile which  is currently a CONSTANT set in index.php
      */
     protected function _setcustomControllerFile ()
     {
-            if (isset($this->customoduleDir)&&isset($this->moduleLoadFile))
+            if (isset($this->customoduleDir) && isset($this->moduleLoadFile))
             {
                   $loadFile = $this->customoduleDir.DIRECTORY_SEPARATOR.$this->moduleLoadFile;
                 //Custom module load file
@@ -141,11 +105,10 @@ public $defaultModuleFile = 'index';//If URL does not exist, then send to index.
                 throw new \Exception("Directory||Loadfile not available", 1);
                 
             }
-      
     }
 
     /**
-      *_setCustomModuleDir
+      *PROTECTED _setCustomModuleDir
       *
       *@param $cModule:String From Url
       *$this->moduleRootDir is a CONSTANT set in index.php
@@ -181,35 +144,40 @@ public $defaultModuleFile = 'index';//If URL does not exist, then send to index.
         }
     }
 
-    /*
-     *_urlBasename
-     *
-     *A helper method which strips the url down to its basename.
+     /**
+     *PRIVATE _setModuleController
      *
      */
-    protected function _urlBasename ($url)
+    private function _setModuleController ($module)
     {
-              
-        foreach ($url as $key => $value) {
-            $url[basename($key)]=basename($value);
-        }
-        return $url;
-       
+          $this->_setCustomModuleDir ($this->url->m = $module);
+                //Custom module load file
+                //@see comments in _setcustomControllerFile().
+                if ($this->_setcustomControllerFile())
+                {
+                   //Clone (object)URL
+                   $clonedUrl = clone $this->url;
+                   //Then unset the module and pass remained of url to Controller.
+                   unset($clonedUrl->m);
+                   $this->_controlContent ($this->customControllerFile,$clonedUrl);
+                }
+                else
+                {
+                    throw new \Exception("This module file still does not exists", 1);
+                }
     }
 
-    /*
-     *_convertBaseUrlArrayToObject
+    /**
+     *PRIVATE _controlContent.
+     *Initialize the Controller Class.
      *
-     *Use ARRAY as OBJECT
-     *
+     *@param $controller:String The path to the module load file.
+     *@param  $params:Object Parameters from the url.
+     *@return new Controller().
      */
-    protected function _convertBaseUrlArrayToObject ($url)
+     private function _controlContent ($controller,$params)
     {
-        $param = $this->_urlBasename ($url);
-          //convert url array to object.
-        $objGet = new Helper\ArrayToObject();
-        return $objGet->convert ($param);
+            $control = new Controller\Controller($controller,$params);
     }
-
   
-}//End Class
+}//END CLASS

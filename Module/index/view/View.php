@@ -7,12 +7,19 @@ use Engine\View as MainView;
  */
 class View extends MainView\View
 {
-    public $values="hello";
+    public $values;
     
     public function __construct ($data)
     {
+        $this->values=$data;
         MainView\View::__construct();
     }
+
+    public function __toString()
+    {
+        return $this->value;
+    }
+    
      public function _setBody ()
     {
 

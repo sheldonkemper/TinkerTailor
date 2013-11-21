@@ -3,12 +3,17 @@ namespace Engine\Model;
 use Engine\Database as Database;
 use Engine\Helper as Helper;
 /**
- *@file
+ *Create general purpose methods to query  database 
  *
  */
 class Model extends Database\Database
 {
+    protected $connection;//The database handler.
 
+    /**
+     *Used to determine if the method exists in the class.
+     *
+     */
   protected function _action($string)
     {
         $isMethod = new Helper\ClassHelper();
@@ -19,11 +24,25 @@ class Model extends Database\Database
      *
      *
      */
+    private function _connection() 
+    {
+        $db = $this->getInstance();
+        $this->connection = $db->getConnection();
+        return true;
+
+    }
+    /**
+     *Use a prepared statement to query database.
+     *@param $query:String sql prepared statement.
+     *@param $array:Array parameters to pass.
+     *@return Fetches a row from a result set associated with a PDOStatement object.
+     *
+     */
     public function _select ($query,$array)
     {
-        if(self::$dbtest){
+        if( $this->_connection() ){
             
-            $stmt = self::$dbtest->prepare($query);
+            $stmt = $this->connection->prepare($query);
             $stmt->execute($array);
             return $stmt->fetch();
         }

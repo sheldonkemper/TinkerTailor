@@ -1,1 +1,1 @@
-alert('hello');
+console.log('hello from Assets/js/asset_script');
